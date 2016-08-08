@@ -5,10 +5,10 @@ import {get, post} from '../common/ajax';
  * @param  {String} type  首页数据类型
  * @return {Promise}      Promise
  */
-export const getHomePage = (http, type = 2) => {
+export const getHomePage = (context, type = 2) => {
   const url = '/search/h5/hotList';
   const params = { id: type };
-  return post(http, url, params)
+  return post(context, url, params)
     .then((json) => {
       if (json.returnCode == 0) {
         return json.data;

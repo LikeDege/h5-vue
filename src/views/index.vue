@@ -26,7 +26,7 @@
   import hotDestList from '../components/destination/hotList';
   import guideList from '../components/guide/list';
   import cFooter from '../components/common/footer';
-  import { getHomePage } from '../service';
+  import { getHomePage } from '../services';
   export default {
     data() {
       return {homePage: {}};
@@ -42,7 +42,7 @@
     route: {
       data() {
         // 获取首页数据
-        getHomePage(this.$http).then(response => {this.homePage = response}, err => console.log(err));
+        getHomePage(this).then(response => {this.homePage = response}, err => console.log(err));
       },
     },
   };
