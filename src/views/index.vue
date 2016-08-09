@@ -1,22 +1,18 @@
-<template>
-    <search-box></search-box>
-    <swiper :items='homePage.homeBanners' ></swiper>
-    <journey-type-list></journey-type-list>
-    <div>
-        <div class="title">
-            <h3>热门目的地</h3>
-            <a class="more" href="http://test.h5.8pig.com/destList.html">更多</a>
-        </div>
-        <hot-dest-list :dests='homePage.hotDestinations'></hot-dest-list>
-    </div>
-    <div>
-        <div class="title"><h3>推荐达人</h3></div>
-        <guide-list :guides='homePage.guideListInfos'></guide-list>
-    </div>
-    <div>
-      <div class="title"><h3>帮助信息</h3></div>
-      <c-footer></c-footer>
-    </div>
+<template lang="jade">
+    search-box
+    swiper(:items='homePage.homeBanners')
+    journey-type-list
+    div
+        .title
+            h3 热门目的地
+            a.more(href="http://test.h5.8pig.com/destList.html") 更多
+        hot-dest-list(:dests='homePage.hotDestinations')
+    div
+        .title 推荐达人
+        guide-list(:guides='homePage.guideListInfos')
+    div
+        .title 帮助信息
+        c-footer
 </template>
 
 <script>
