@@ -19,6 +19,13 @@ module.exports = {
   dev: {
     env: require('./dev.env'),
     port: 8080,
-    proxyTable: {}
+    proxyTable: {
+      '/8pig-api/':
+      {
+        target: 'http://api3.8pig.com', // target host 
+        changeOrigin: true,               // needed for virtual hosted sites 
+        ws: true
+      }
+    }
   }
 }

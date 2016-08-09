@@ -9,16 +9,6 @@ Vue.use(lazyload);
 Vue.use(VueResource);
 Vue.use(VueRouter);
 
-Vue.http.interceptors.push((request, next) => {
-    // continue to next interceptor
-    next((response) => {
-    	if(!response.data || response.data.returnCode != 0) {
-    		response.ok = false;
-    	}
-		return response;
-	});
-});
-
 const router = new VueRouter({
   hashbang: false,
   history: true,
