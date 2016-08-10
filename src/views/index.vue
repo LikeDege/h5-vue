@@ -1,4 +1,5 @@
 <template lang="jade">
+ div
     search-box
     swiper(:items='homePage.homeBanners')
     journey-type-list
@@ -36,9 +37,9 @@
       cFooter,
     },
     route: {
-      data() {
+      data(transition) {
         // 获取首页数据
-        getHomePage(this).then(response => {this.homePage = response}, err => console.log(err));
+        return getHomePage(this).then(response => {this.homePage = response}, err => console.log(err));
       },
     },
   };
