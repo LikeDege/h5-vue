@@ -1,6 +1,7 @@
 <template>
+<div>
     <search-box></search-box>
-    <swiper :items='homePage.homeBanners' ></swiper>
+    <swiper :items='homePage.homeBanners'></swiper>
     <journey-type-list></journey-type-list>
     <div>
         <div class="title">
@@ -17,6 +18,7 @@
       <div class="title"><h3>帮助信息</h3></div>
       <c-footer></c-footer>
     </div>
+</div>
 </template>
 
 <script>
@@ -40,9 +42,9 @@
       cFooter,
     },
     route: {
-      data() {
+      data(transition) {
         // 获取首页数据
-        getHomePage(this).then(response => {this.homePage = response}, err => console.log(err));
+        return getHomePage(this).then(response => {this.homePage = response}, err => console.log(err));
       },
     },
   };

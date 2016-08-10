@@ -45,9 +45,9 @@ var webpackConfig = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: process.env.NODE_ENV === 'testing'
         ? 'index.html'
-        : path.resolve(__dirname, '../dist/index.html'),
+        : config.build.index,
       template: 'index.html',
-      inject: false,
+      inject: true,
       minify: {
         removeComments: true,
         collapseWhitespace: true,
