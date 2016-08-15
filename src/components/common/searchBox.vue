@@ -8,7 +8,6 @@
 <style lang="scss" scoped>
 	.search-box {
 	    position: relative;
-		margin-top:50px;
 	    padding: 8px 10px;
 	    background-color: #fff;
 

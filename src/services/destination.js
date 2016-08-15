@@ -1,20 +1,19 @@
 import {get, post} from '../common/ajax'; 
 
 /**
- * 获取首页数据
+ * 获取城市列表
  * @param  {Object} context 上下文
- * @param  {String} type    首页数据类型
- * @return {Promise}        Promise
+ * @param  {Object} params  查询条件
+ * @return {Promise}      Promise
  */
-export const getHomePage = (context, type = 2) => {
-  const url = '/search/h5/hotList';
-  const params = { id: type };
+export const getCityList = (context, params) => {
+  const url = '/addr/cityList';
   return post(context, url, params)
     .then((json) => {
       if (json.returnCode == 0) {
         return json.data;
       }
-      return Promise.reject(new Error('getHomePage failure'));
+      return Promise.reject(new Error('getCityList failure'));
     })
     .catch((error) => {
       return Promise.reject(error);

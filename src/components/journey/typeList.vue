@@ -1,17 +1,30 @@
 <template>
     <div class="journey-type">
         <ul>
-            <li><a href="http://test.h5.8pig.com/journeyService.html?journeyType=3"><i class="icon-guide"></i>
+            <li><a v-link="{name: 'journeyList', query: {journeyType: guide}}"><i class="icon-guide"></i>
                 <p>向导服务</p></a></li>
-            <li><a href="http://test.h5.8pig.com/journeyService.html?journeyType=4"><i class="icon-airport"></i>
+            <li><a v-link="{name: 'journeyList', query: {journeyType: airport}}"><i class="icon-airport"></i>
                 <p>机场接送</p></a></li>
-            <li><a href="http://test.h5.8pig.com/journeyService.html?journeyType=2"><i class="icon-feature"></i>
+            <li><a v-link="{name: 'journeyList', query: {journeyType: feature}}"><i class="icon-feature"></i>
                 <p>特色项目</p></a></li>
-            <li><a href="http://test.h5.8pig.com/journeyService.html?journeyType=1"><i class="icon-long-line"></i>
+            <li><a v-link="{name: 'journeyList', query: {journeyType: longLine}}"><i class="icon-long-line"></i>
                 <p>长线玩法</p></a></li>
         </ul>
     </div>
 </template>
+<script>
+	import { JOURNEY_TYPE_LONGLINE, JOURNEY_TYPE_FEATURE, JOURNEY_TYPE_GUIDE, JOURNEY_TYPE_AIRPORT } from '../../common/constants';
+	export default {
+	  	data() {
+	  		return {
+	  			longLine: JOURNEY_TYPE_LONGLINE,
+	  			feature: JOURNEY_TYPE_FEATURE,
+	  			guide: JOURNEY_TYPE_GUIDE,
+	  			airport: JOURNEY_TYPE_AIRPORT,
+	  		}
+	  	},
+	}
+</script>
 <style lang="scss" scoped>
 
 .journey-type{

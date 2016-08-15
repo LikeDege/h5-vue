@@ -30,7 +30,8 @@
     overflow: hidden;
     background-color: #fff;
     padding: 0 10px;
-    border-bottom: 1px solid #eaeaea
+    border-bottom: 1px solid #eaeaea;
+    z-index: 1;
   }
 
   .brand {
@@ -44,7 +45,6 @@
   .navbar {
     float: right;
     display: inline-block;
-    overflow: hidden;
 
     li {
       float: left;

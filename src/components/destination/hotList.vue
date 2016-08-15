@@ -2,8 +2,8 @@
 <div class="hot-list">
 	<ul>
         <li v-for="(idx,hotDest) in dests" v-if="idx < 6">
-            <a href="http://test.h5.8pig.com/place.html?pid={{hotDest.destinationId}}">
-                <img v-lazy="hotDest.imgUrl+'@1e_1c_'+hotDestImgW+'w'" class="bg" width="{{hotDestImgW}}" height="{{hotDestImgH}}" />
+            <a v-link="{ name: 'journeyList', query: { destId: hotDest.destinationId, destType: hotDest.type, destName: hotDest.nameCn }}">
+                <c-img :options="{cdn:'ali', src:hotDest.imgUrl, class:'bg', width:hotDestImgW, scale:0.86}"></c-img>
             </a>
             <div class="name">{{hotDest.nameCn}}</div>
         </li>
@@ -11,17 +11,18 @@
 </div>
 </template>
 <script>
+  import cImg from '../common/image';
   export default {
     props: ['dests'],
+    components: {
+    	cImg,
+    },
     computed: {
       screenW() {
         return window.innerWidth>screen.availWidth?screen.availWidth:window.innerWidth;
       },
       hotDestImgW() {
         return parseInt((this.screenW - 40) / 3);
-      },
-      hotDestImgH() {
-        return parseInt(this.hotDestImgW * 0.86);
       },
     },
   };

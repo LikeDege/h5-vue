@@ -34,7 +34,7 @@ exports.install = function (Vue, options) {
             const listener = listeners[i]
             checkCanShow(listener)
         }
-    }, 100)
+    }, 80)
 
     const checkCanShow = function (listener) {
         let winH
@@ -105,20 +105,18 @@ exports.install = function (Vue, options) {
         })
     }
 
-    const componentWillUnmount = function (src) {
+    const componentWillUnmount = function (el) {
         let i
         let len = listeners.length
-        src = src || DEFAULT_URL;
         for (i=0; i<len; i++) {
-            if (listeners[i].src == src) {
+            if (listeners[i].el == el) {
                 listeners.splice(i,1)
             }
         }
 
-        if (listeners.length == 0) {
+        if (listeners.length == 0 && init.hasbind) {
+            init.hasbind = false;
             window.removeEventListener('scroll', lazyLoadHandler)
-            window.removeEventListener('wheel', lazyLoadHandler)
-            window.removeEventListener('mousewheel', lazyLoadHandler)
             window.removeEventListener('resize', lazyLoadHandler)
         }
       }
@@ -126,18 +124,16 @@ exports.install = function (Vue, options) {
     Vue.directive('lazy', {
         bind: function() {
             if (!init.hasbind) {
+                init.hasbind = true;
                 Vue.nextTick(() => {
                     if(document.getElementById(Object.keys(this.modifiers)[0])) {
                       init.isInChild = true
                       init.childEl = document.getElementById(Object.keys(this.modifiers)[0])
                     }
-                    init.hasbind = true
                     if(init.isInChild) {
                       init.childEl.addEventListener('scroll', lazyLoadHandler)
                     }
                     window.addEventListener('scroll', lazyLoadHandler)
-                    window.addEventListener('wheel', lazyLoadHandler)
-                    window.addEventListener('mousewheel', lazyLoadHandler)
                     window.addEventListener('resize', lazyLoadHandler)
                     lazyLoadHandler()
                 })
@@ -167,7 +163,8 @@ exports.install = function (Vue, options) {
             })
         },
         unbind: function (src) {
-            componentWillUnmount(src)
+            if (!this.el) return
+            componentWillUnmount(this.el)
         }
     })
 }

@@ -5,7 +5,7 @@
 	        <a href="http://test.h5.8pig.com/guide.html?id={{guide.id}}">
 	            <div class="img-box">
 	                <div class="avatar"><img :src="guide.avatar+'@60w_60h_1e_1l_1c'" width="60px" height="60px" alt=""></div>
-	                <img v-lazy="guide.bgImg+'@1c_1e_'+guideBgImgW+'w_'+guideBgImgH+'h'" width="{{guideBgImgW}}" height="{{guideBgImgH}}" class="bg" alt="">
+	                <c-img :options="{cdn:'ali', src:guide.bgImg, width:guideBgImgW, scale:0.58, class:'bg'}"></c-img>
 	            </div>
 	            <h4>{{guide.nickname}}&nbsp;<span>{{guide.country.nameCn}}•{{guide.country.nameEn}}</span></h4>
 	        </a>
@@ -25,17 +25,18 @@
 </div>
 </template>
 <script>
+  import cImg from '../common/image';
   export default {
     props: ['guides'],
+    components: {
+    	cImg,
+    },
     computed: {
       screenW() {
         return window.innerWidth>screen.availWidth?screen.availWidth:window.innerWidth;
       },
       guideBgImgW() {
         return this.screenW - 20;
-      },
-      guideBgImgH() {
-        return parseInt(this.guideBgImgW * 0.58);
       },
     },
   };

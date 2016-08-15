@@ -1,7 +1,7 @@
 <template lang="jade">
  div
     search-box
-    swiper(:items='homePage.homeBanners')
+    swiper(:items='homePage.homeBanners' )
     journey-type-list
     div
         .title
@@ -9,10 +9,12 @@
             a.more(href="http://test.h5.8pig.com/destList.html") 更多
         hot-dest-list(:dests='homePage.hotDestinations')
     div
-        .title 推荐达人
+        .title 
+            h3 推荐达人
         guide-list(:guides='homePage.guideListInfos')
     div
-        .title 帮助信息
+        .title
+            h3 帮助信息
         c-footer
 </template>
 
@@ -26,7 +28,7 @@
   import { getHomePage } from '../services';
   export default {
     data() {
-      return {homePage: {}};
+      return {homePage: {homeBanners:[],hotDestinations:[],guideListInfos:[]}};
     },
     components: {
       searchBox,

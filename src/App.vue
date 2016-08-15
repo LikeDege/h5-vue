@@ -71,6 +71,7 @@ export default {
   .main {
     overflow: hidden;
     min-height: 100%;
+    margin-top:50px;
   }
 
   @font-face {
