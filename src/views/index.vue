@@ -15,7 +15,7 @@
     div
         .title
             h3 帮助信息
-        c-footer
+        help
 </template>
 
 <script>
@@ -24,7 +24,7 @@
   import journeyTypeList from '../components/journey/typeList';
   import hotDestList from '../components/destination/hotList';
   import guideList from '../components/guide/list';
-  import cFooter from '../components/common/footer';
+  import help from '../components/common/help';
   import { getHomePage } from '../services';
   export default {
     data() {
@@ -36,7 +36,7 @@
       journeyTypeList,
       hotDestList,
       guideList,
-      cFooter,
+      help,
     },
     route: {
       data(transition) {

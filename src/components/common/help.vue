@@ -1,5 +1,5 @@
 <template>
-  <div class="footer">
+  <div class="help">
     <ul>
       <li><a href="http://test.h5.8pig.com/flow.html"><i class="icon-booking"></i><p>预定流程</p></a></li><li>
       <a href="http://test.h5.8pig.com/faq.html"><i class="icon-faq"></i><p>常见问题</p></a></li><li>
@@ -10,7 +10,7 @@
 </template>
 
 <style lang="scss" scoped>
-  .footer {
+  .help {
     ul {
       width: 100%;
       background-color: #fff;
