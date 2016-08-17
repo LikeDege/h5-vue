@@ -136,7 +136,6 @@ exports.install = function (Vue, options) {
                     }
                     window.addEventListener('scroll', lazyLoadHandler)
                     window.addEventListener('resize', lazyLoadHandler)
-                    lazyLoadHandler()
                 })
             }
         },
@@ -152,15 +151,16 @@ exports.install = function (Vue, options) {
                 if(document.getElementById(Object.keys(this.modifiers)[0])) {
                   parentEl = document.getElementById(Object.keys(this.modifiers)[0])
                 }
-                listeners.push({
+                let listener = {
                     bindType: this.arg,
                     try: 0,
                     parentEl: parentEl,
                     el: this.el,
                     src: newValue,
                     y: this.el.y,
-                })
-                lazyLoadHandler()
+                }
+                listeners.push(listener)
+                checkCanShow(listener)
             })
         },
         unbind: function () {
