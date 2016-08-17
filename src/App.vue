@@ -43,7 +43,7 @@ export default {
   }
 
   ul {
-    overflow: auto;
+    overflow: hidden;
   }
 
   a:link,

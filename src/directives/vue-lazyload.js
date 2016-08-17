@@ -111,6 +111,7 @@ exports.install = function (Vue, options) {
         for (i=0; i<len; i++) {
             if (listeners[i].el == el) {
                 listeners.splice(i,1)
+                break
             }
         }
 
@@ -162,7 +163,7 @@ exports.install = function (Vue, options) {
                 lazyLoadHandler()
             })
         },
-        unbind: function (src) {
+        unbind: function () {
             if (!this.el) return
             componentWillUnmount(this.el)
         }
