@@ -1,5 +1,5 @@
 <template>
-  <div class="aside-nav" {{if isWx}}style="top:88px;"{{/if}}>
+  <div class="aside-nav">
     <ul @click="scrollTo($event)">
         <li><a>热门</a></li>
         <li><a>A</a></li>
