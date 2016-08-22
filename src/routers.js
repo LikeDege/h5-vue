@@ -7,5 +7,8 @@ export default (router) => router.map({
     name: 'journeyList',
     component(resolve) {require(['./views/journey/list'], resolve);},
   },
-
+  '/destination/list': {
+    name: 'destinationList',
+    component(resolve) {require(['./views/destination/list'], resolve);},
+  },
 });

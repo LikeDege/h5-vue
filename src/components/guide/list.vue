@@ -4,7 +4,9 @@
 		<li class="item" v-for="guide in guides">
 	        <a href="http://test.h5.8pig.com/guide.html?id={{guide.id}}">
 	            <div class="img-box">
-	                <div class="avatar"><img :src="guide.avatar+'@60w_60h_1e_1l_1c'" width="60px" height="60px" alt=""></div>
+	                <div class="avatar">
+	                	<c-img :options="{cdn:'ali', src:guide.avatar, width:60, scale:1}"></c-img>
+	                </div>
 	                <c-img :options="{cdn:'ali', src:guide.bgImg, width:guideBgImgW, scale:0.58, class:'bg'}"></c-img>
 	            </div>
 	            <h4>{{guide.nickname}}&nbsp;<span>{{guide.country.nameCn}}•{{guide.country.nameEn}}</span></h4>

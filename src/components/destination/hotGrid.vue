@@ -1,8 +1,8 @@
 <template>
-<div class="hot-list">
+<div class="hot-grid">
 	<ul>
         <li v-for="(idx,hotDest) in dests" v-if="idx < 6">
-            <a v-link="{ name: 'journeyList', query: { destId: hotDest.destinationId, destType: hotDest.type, destName: hotDest.nameCn }}">
+            <a v-link="{ name: 'journeyList', query: { destId: hotDest.destinationId, destType: hotDest.type, destName: hotDest.nameCn, searchBy: 'destination' }}">
                 <c-img :options="{cdn:'ali', src:hotDest.imgUrl, class:'bg', width:hotDestImgW, scale:0.86}"></c-img>
             </a>
             <div class="name">{{hotDest.nameCn}}</div>
@@ -28,7 +28,7 @@
   };
 </script>
 <style lang="scss" scoped>
-.hot-list {
+.hot-grid {
     width: 100%;
     background-color: #fff;
 

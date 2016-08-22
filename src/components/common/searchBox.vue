@@ -1,10 +1,33 @@
 <template>
 	<div class="search-box">
 	    <i class="icon icon-search">&#xe602;</i>
-	    <input type="text" class="search-text" placeholder="想去哪里?"/>
-	    <a class="cancel"><i class="icon icon-cancel">&#xe637;</i></a>
+	    <input v-model="keyword" @keyup="search($event)" type="text" class="search-text" placeholder="想去哪里?"/>
+	    <a class="cancel" v-show="keyword" @click="clear"><i class="icon icon-cancel">&#xe637;</i></a>
 	</div>
 </template>
+<script>
+  export default {
+  	props: {
+		keyword: {
+			type: String,
+			default: '',
+		},
+	},
+    methods: {
+    	clear() {
+    		this.keyword = '';
+    	},
+    	search(e) {
+    		if(e.which == 13) {
+				let keyword = this.keyword.trim();
+				if (keyword){
+					this.$router.go({ name: 'journeyList', query: { keyword: keyword }});
+				}
+			}
+    	},
+    },
+  };
+</script>
 <style lang="scss" scoped>
 	.search-box {
 	    position: relative;
@@ -41,11 +64,14 @@
 
 		.cancel {
 		    position: absolute;
-		    top: 17px;
-		    right: 20px;
+		    top: 8px;
+		    right: 15px;
+		    padding: 9px;
+		    font-size: 0;
 		}
 
 		.icon-cancel {
+			width: 16px;
 		    height: 16px;
 		    line-height: 16px;
 		    font-size: 16px;

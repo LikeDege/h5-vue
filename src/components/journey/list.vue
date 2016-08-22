@@ -1,6 +1,6 @@
 <template>
     <div class="journey-list">
-        <ul>
+        <ul v-if="journeys.length > 0">
             <li v-for="journey in journeys">
                 <a :href="'http://test.h5.8pig.com/journey.html?id='+journey.id">
                     <div class="pic">
@@ -20,6 +20,7 @@
                 </a>
             </li>
         </ul>
+        <div v-else class="no-result">暂无相关玩法</div>
     </div>
 </template>
 <script>
@@ -110,6 +111,13 @@
 				}
 			}
 		}
+	}
+
+	.no-result {
+	    padding: 30px 0;
+	    text-align: center;
+	    font-size: 14px;
+	    color: #999;
 	}
 }
 

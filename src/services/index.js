@@ -3,8 +3,8 @@ import {get, post} from '../common/ajax';
 /**
  * 获取首页数据
  * @param  {Object} context 上下文
- * @param  {String} type    首页数据类型
- * @return {Promise}        Promise
+ * @param  {String} type 首页数据类型
+ * @return {Promise} Promise
  */
 export const getHomePage = (context, type = 2) => {
   const url = '/search/h5/hotList';

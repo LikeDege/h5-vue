@@ -1,28 +1,31 @@
 <template lang="jade">
  div
-    search-box
-    swiper(:items='homePage.homeBanners' )
-    journey-type-list
-    div
-        .title
-            h3 热门目的地
-            a.more(href="http://test.h5.8pig.com/destList.html") 更多
-        hot-dest-list(:dests='homePage.hotDestinations')
-    div
-        .title 
-            h3 推荐达人
-        guide-list(:guides='homePage.guideListInfos')
-    div
-        .title
-            h3 帮助信息
-        help
+    spinner(:show='$loadingRouteData')
+    template(v-if='!$loadingRouteData')
+      search-box
+      swiper(:items='homePage.homeBanners')
+      journey-type-bar
+      div
+          .title
+              h3 热门目的地
+              a.more(href="http://test.h5.8pig.com/destList.html") 更多
+          hot-dest-grid(:dests='homePage.hotDestinations')
+      div
+          .title 
+              h3 推荐达人
+          guide-list(:guides='homePage.guideListInfos')
+      div
+          .title
+              h3 帮助信息
+          help
 </template>
 
 <script>
+  import spinner from '../components/common/spinner';
   import searchBox from '../components/common/searchBox';
   import swiper from '../components/common/swiper';
-  import journeyTypeList from '../components/journey/typeList';
-  import hotDestList from '../components/destination/hotList';
+  import journeyTypeBar from '../components/journey/typeBar';
+  import hotDestGrid from '../components/destination/hotGrid';
   import guideList from '../components/guide/list';
   import help from '../components/common/help';
   import { getHomePage } from '../services';
@@ -31,10 +34,11 @@
       return {homePage: {homeBanners:[],hotDestinations:[],guideListInfos:[]}};
     },
     components: {
+      spinner,
       searchBox,
       swiper,
-      journeyTypeList,
-      hotDestList,
+      journeyTypeBar,
+      hotDestGrid,
       guideList,
       help,
     },

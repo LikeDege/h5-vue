@@ -3,33 +3,44 @@
     <header class="journey-title" v-if="$route.query.journeyType">
         <h2>{{$route.query.journeyType | transJourneyType}}</h2>
     </header>
-    <template v-if="$route.query.destId">
-      <city-list :dest-id="$route.query.destId" :dest-type="$route.query.destType" :dest-name="$route.query.destName" :city-id.sync="conditions.destId"></city-list>
-      <journey-type-list :journey-type.sync="conditions.filterCondition.journeyTypes[0]"></journey-type-list>
-    </template>
-    <condition-bar v-show="!$route.query.destId || conditions.filterCondition.journeyTypes[0]" :journey-type.sync="conditions.filterCondition.journeyTypes[0]" :sort.sync="conditions.filterCondition.sort" :traffic-type.sync="conditions.filterCondition.trafficType" ></condition-bar>
+    <city-grid v-if="$route.query.searchBy=='destination'"
+               :dest-id="$route.query.destId"  
+               :dest-type="$route.query.destType" 
+               :dest-name="$route.query.destName" 
+               :city-id.sync="conditions.destId"></city-grid>
+    <journey-type-bar v-if="$route.query.searchBy!='journeyType'" :journey-type.sync="conditions.filterCondition.journeyTypes[0]"></journey-type-bar>
+    <search-bar v-show="$route.query.searchBy == 'journeyType' || conditions.filterCondition.journeyTypes[0]" 
+                :optional-dest="$route.query.destNamesearchBy != 'destination'"
+                :dest-name="$route.query.destName"
+                :journey-type.sync="conditions.filterCondition.journeyTypes[0]" 
+                :sort.sync="conditions.filterCondition.sort" 
+                :traffic-type.sync="conditions.filterCondition.trafficType"></search-bar>
     <journey-list :journeys="journeys"></journey-list>
   </div>
 </template>
 
 <script>
-  import cityList from '../../components/destination/cityList';
-  import journeyTypeList from '../../components/journey/typeList1';
-  import conditionBar from '../../components/journey/conditionBar';
+  import cityGrid from '../../components/destination/cityGrid';
+  import journeyTypeBar from '../../components/journey/typeBar1';
+  import searchBar from '../../components/journey/searchBar';
   import journeyList from '../../components/journey/list';
   import { getJourneyList } from '../../services/journey';
+  import { SERACH_TYPE_DEST, SERACH_TYPE_KEYWORD } from '../../common/constants';
   export default {
     data() {
-      let data =  {
-              journeys: [],
-              conditions: {
-                  type: 1,
-                  pageNo: 1,
-                  pageSize: 6,
-                  destId: undefined,
-                  filterCondition: {journeyTypes:[], sort: undefined, trafficType: undefined},
-              },
-           };
+      // 关键字查询
+      let keyword = this.$route.query.keyword;
+      let data = {
+        journeys: [],
+        conditions: {
+            type: keyword ? SERACH_TYPE_KEYWORD : SERACH_TYPE_DEST,
+            pageNo: 1,
+            pageSize: 6,
+            destId: undefined,
+            keyword: keyword,
+            filterCondition: {journeyTypes:[], sort: undefined, trafficType: undefined},
+        },
+      };
       let journeyType = this.$route.query.journeyType;
       journeyType && (data.conditions.filterCondition.journeyTypes.push(parseInt(journeyType)));
       let destId = this.$route.query.destId;
@@ -37,20 +48,15 @@
       return data;
     },
     components: {
-      cityList,
-      journeyTypeList,
-      conditionBar,
+      cityGrid,
+      journeyTypeBar,
+      searchBar,
       journeyList,
     },
     route: {
       data(transition) {
           return this.query();
       },
-    },
-    ready() {
-      window.addEventListener("popstate", function() {
-        console.log(2);                             
-      });
     },
     methods: {
       query() {

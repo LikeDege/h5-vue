@@ -3,8 +3,8 @@ import {get, post} from '../common/ajax';
 /**
  * 获取玩法列表
  * @param  {Object} context 上下文
- * @param  {Object} params  查询条件
- * @return {Promise}        Promise
+ * @param  {Object} params 查询条件
+ * @return {Promise} Promise
  */
 export const getJourneyList = (context, params) => {
   const url = '/journey/search';

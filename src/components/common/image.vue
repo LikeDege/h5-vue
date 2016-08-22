@@ -31,5 +31,16 @@
     },
   };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+img {
+    transition:all 0.4s linear;
+}
+
+img[lazy=loading] {
+    opacity: .3;
+}
+
+img[lazy=loaded] {
+    opacity: 1;
+}
 </style>

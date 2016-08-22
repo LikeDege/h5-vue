@@ -27,22 +27,18 @@
 </template>
 <script>
   import { getCityList } from '../../services/destination';
-  import { JOURNEY_TYPE_LONGLINE, JOURNEY_TYPE_FEATURE, JOURNEY_TYPE_GUIDE, JOURNEY_TYPE_AIRPORT } from '../../common/constants';
+  import { JRNY_TYPE_LONGLINE, JRNY_TYPE_FEATURE, JRNY_TYPE_GUIDE, JRNY_TYPE_AIRPORT, DEST_TYPE_COUNTRY } from '../../common/constants';
   export default {
   	data() {
   		return {
-  			longLine: JOURNEY_TYPE_LONGLINE,
-  			feature: JOURNEY_TYPE_FEATURE,
-  			guide: JOURNEY_TYPE_GUIDE,
-  			airport: JOURNEY_TYPE_AIRPORT,
+  			longLine: JRNY_TYPE_LONGLINE,
+  			feature: JRNY_TYPE_FEATURE,
+  			guide: JRNY_TYPE_GUIDE,
+  			airport: JRNY_TYPE_AIRPORT,
   		}
   	},
     props: {
     	journeyType: Number,
-    },
-    created() {
-		let params = this.destType == 2 ? {countryId: this.destId} : {provinceId: this.destId};
-		getCityList(this, params).then(response => {this.cities = response}, err => console.log(err));
     },
   };
 </script>

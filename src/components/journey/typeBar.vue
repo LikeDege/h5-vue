@@ -1,26 +1,39 @@
 <template>
     <div class="journey-type">
         <ul>
-            <li><a v-link="{name: 'journeyList', query: {journeyType: guide}}"><i class="icon-guide"></i>
-                <p>向导服务</p></a></li>
-            <li><a v-link="{name: 'journeyList', query: {journeyType: airport}}"><i class="icon-airport"></i>
-                <p>机场接送</p></a></li>
-            <li><a v-link="{name: 'journeyList', query: {journeyType: feature}}"><i class="icon-feature"></i>
-                <p>特色项目</p></a></li>
-            <li><a v-link="{name: 'journeyList', query: {journeyType: longLine}}"><i class="icon-long-line"></i>
-                <p>长线玩法</p></a></li>
+            <li>
+            	<a v-link="{name: 'journeyList', query: {journeyType: guide, searchBy: 'journeyType'}}">
+	            	<i class="icon-guide"></i>
+	                <p>向导服务</p>
+                </a>
+            </li><li>
+            	<a v-link="{name: 'journeyList', query: {journeyType: airport, searchBy: 'journeyType'}}">
+	            	<i class="icon-airport"></i>
+	                <p>机场接送</p>
+                </a>
+            </li><li>
+            	<a v-link="{name: 'journeyList', query: {journeyType: feature, searchBy: 'journeyType'}}">
+	            	<i class="icon-feature"></i>
+	                <p>特色项目</p>
+                </a>
+            </li><li>
+            	<a v-link="{name: 'journeyList', query: {journeyType: longLine, searchBy: 'journeyType'}}">
+	            	<i class="icon-long-line"></i>
+	                <p>长线玩法</p>
+                </a>
+            </li>
         </ul>
     </div>
 </template>
 <script>
-	import { JOURNEY_TYPE_LONGLINE, JOURNEY_TYPE_FEATURE, JOURNEY_TYPE_GUIDE, JOURNEY_TYPE_AIRPORT } from '../../common/constants';
+	import { JRNY_TYPE_LONGLINE, JRNY_TYPE_FEATURE, JRNY_TYPE_GUIDE, JRNY_TYPE_AIRPORT } from '../../common/constants';
 	export default {
 	  	data() {
 	  		return {
-	  			longLine: JOURNEY_TYPE_LONGLINE,
-	  			feature: JOURNEY_TYPE_FEATURE,
-	  			guide: JOURNEY_TYPE_GUIDE,
-	  			airport: JOURNEY_TYPE_AIRPORT,
+	  			longLine: JRNY_TYPE_LONGLINE,
+	  			feature: JRNY_TYPE_FEATURE,
+	  			guide: JRNY_TYPE_GUIDE,
+	  			airport: JRNY_TYPE_AIRPORT,
 	  		}
 	  	},
 	}

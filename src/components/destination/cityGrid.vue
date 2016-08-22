@@ -1,12 +1,14 @@
 <template>
-<div class="city">
+<div class="city-grid">
     <header><h3>{{ destName }}</h3></header>
-    <ul>
+    <ul v-if="cities.length > 0">
         <li><a @click="update(destId)" :class="{active:destId==cityId}">全部</a></li>
-        <li v-for="(idx,city) in cities" :class="{hidden:idx>=6}">
+        <li v-for="(idx,city) in cities" :class="{hidden:idx>=6 && !isOpen}">
             <a @click="update(city.id)" :class="{active:city.id==cityId}">{{ city.nameCn }}</a>
         </li>
-        <li v-if="cities && cities.length>8" class="more"><a>更多</a><i>&#xe61a</i></li>
+        <li v-if="cities && cities.length>8" class="more">
+        	<a @click="this.isOpen = !this.isOpen">{{isOpen ? '收起' : '更多'}}<i>{{isOpen ? '&#xe61b' : '&#xe61a'}}</i></a>
+        </li>
     </ul>
 </div>
 </template>
@@ -16,6 +18,7 @@
   	data() {
   		return {
   			cities: [],
+  			isOpen: false,
   		};
   	},
     props: ['destName','destId','destType','cityId'],
@@ -26,14 +29,13 @@
     methods: {
     	update(cityId) {
     		this.cityId = cityId;
-    	}
+    	},
     }
   };
 </script>
 <style lang="scss" scoped>
-.city {
+.city-grid {
     background-color: #fff;
-    border-bottom: 1px solid #eaeaea;
 
     header {
     	padding: 10px 10px 0;
@@ -50,6 +52,7 @@
     ul {
 	    padding: 7px;
 	    overflow: hidden;
+    	border-bottom: 1px solid #eaeaea;
 
 	    li {
 		    padding: 3px;
@@ -82,21 +85,19 @@
 			    a {
 				    color: #ff5f69;
 				    border: 0;
-				}
 
-				i {
-				    font-family:"iconfont";
-				    font-style: normal;
-				    font-size: 14px;
-				    right: 10px;
-				    top: 10px;
-				    position: absolute;
-				    color: #ff5f69;
+				    i {
+					    vertical-align: middle;
+					    font-family:"iconfont";
+					    font-style: normal;
+					    color: #ff5f69;
+					}
 				}
 			}
 
 			&.hidden {
-			    display: none;
+				display: none;
+			    opacity: 0;
 			}
 		}
 	}
