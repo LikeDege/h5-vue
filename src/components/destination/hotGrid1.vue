@@ -1,11 +1,11 @@
 <template>
-<div class="hot-grid">
+<div data-anchor="HOT" class="hot-grid">
     <ul>
-        <li v-for="(idx,hotDest) in hotDests">
-            <a v-link="{ name: 'journeyList', query: { destId: hotDest.destinationId, destName: hotDest.nameCn, journeyType: journeyType, searchBy: 'journeyType' }}">
+        <li v-for="(hotDest,idx) in hotDests">
+    		<router-link :to="{ name: 'journeyList', query: { destId: hotDest.destinationId, destName: hotDest.nameCn, journeyType: journeyType, searchBy: 'journeyType' }}">
                 <div class="cn">{{hotDest.nameCn}}</div>
                 <div class="en">{{hotDest.nameEn}}</div>
-            </a>
+            </router-link>
         </li>
     </ul>
 </div>

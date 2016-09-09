@@ -1,14 +1,18 @@
-export default (router) => router.map({
-  '/': {
+export default [{
+    path: '/',
     name: 'index',
-    component(resolve) {require(['./views/index'], resolve);},
+    component(resolve) {require(['./views/index'], resolve)},
   },
-  '/journey/list': {
+  {
+    path: '/journey/list',
     name: 'journeyList',
-    component(resolve) {require(['./views/journey/list'], resolve);},
+    component(resolve) {require(['./views/journey/list'], resolve)},
+    meta: { scrollToTop: true },
   },
-  '/destination/list': {
+  {
+    path: '/destination/list',
     name: 'destinationList',
     component(resolve) {require(['./views/destination/list'], resolve);},
-  },
-});
+    meta: { scrollToTop: true },
+  }
+];

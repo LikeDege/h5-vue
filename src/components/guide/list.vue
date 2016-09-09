@@ -1,50 +1,49 @@
 <template>
-<div class="guide-list">
-	<ul>
-		<li class="item" v-for="guide in guides">
-	        <a href="http://test.h5.8pig.com/guide.html?id={{guide.id}}">
-	            <div class="img-box">
-	                <div class="avatar">
-	                	<c-img :options="{cdn:'ali', src:guide.avatar, width:60, scale:1}"></c-img>
-	                </div>
-	                <c-img :options="{cdn:'ali', src:guide.bgImg, width:guideBgImgW, scale:0.58, class:'bg'}"></c-img>
-	            </div>
-	            <h4>{{guide.nickname}}&nbsp;<span>{{guide.country.nameCn}}•{{guide.country.nameEn}}</span></h4>
-	        </a>
-	        <a href="http://test.h5.8pig.com/journey.html?id={{guide.recommend.id}}">
-	            <div class="journey">我推荐的玩法:{{guide.recommend.name}}</div>
-	        </a>
-	        <a href="http://test.h5.8pig.com/guide.html?id={{guide.id}}">
-	            <p>{{guide.journeyCount}}条旅行特色玩法&nbsp;&nbsp;{{guide.guideStatistic.commentCount}}条评价</p>
-	            <div class="tags">
-	                <ul>
-	                    <li v-for="tag in guide.tags">{{tag.name}}</li>
-	                </ul>
-	            </div>
-	        </a>
-	    </li>
-    </ul>
-</div>
+	<div class="guide-list">
+		<ul>
+			<li class="item" v-for="guide in guides">
+		        <a :href="'http://test.h5.8pig.com/guide.html?id='+guide.id">
+		            <div class="img-box">
+		                <div class="avatar">
+		                	<c-img :options="{src:guide.avatar, width:60, scale:1, e:1, c:1}"></c-img>
+		                </div>
+		                <c-img :options="{src:guide.bgImg, width:guideBgImgW, scale:0.58, class:'bg', e:1, c:1}"></c-img>
+		            </div>
+		            <h4>{{guide.nickname}}&nbsp;<span>{{guide.country.nameCn}}•{{guide.country.nameEn}}</span></h4>
+		        </a>
+		        <a :href="'http://test.h5.8pig.com/journey.html?id='+guide.recommend.id">
+		            <div class="journey">我推荐的玩法:{{guide.recommend.name}}</div>
+		        </a>
+		        <a :href="'http://test.h5.8pig.com/guide.html?id='+guide.id">
+		            <p>{{guide.journeyCount}}条旅行特色玩法&nbsp;&nbsp;{{guide.guideStatistic.commentCount}}条评价</p>
+		            <div class="tags">
+		                <ul>
+		                    <li v-for="tag in guide.tags">{{tag.name}}</li>
+		                </ul>
+		            </div>
+		        </a>
+		    </li>
+	    </ul>
+	</div>
 </template>
 <script>
-  import cImg from '../common/image';
-  export default {
-    props: ['guides'],
-    components: {
-    	cImg,
+import cImg from '../common/image';
+export default {
+  props: ['guides'],
+  components: {
+  	cImg,
+  },
+  computed: {
+    screenW() {
+      return window.innerWidth>screen.availWidth?screen.availWidth:window.innerWidth;
     },
-    computed: {
-      screenW() {
-        return window.innerWidth>screen.availWidth?screen.availWidth:window.innerWidth;
-      },
-      guideBgImgW() {
-        return this.screenW - 20;
-      },
+    guideBgImgW() {
+      return this.screenW - 20;
     },
-  };
+  },
+};
 </script>
 <style lang="scss" scoped>
-
 .guide-list {
 	background-color: #fff;
 

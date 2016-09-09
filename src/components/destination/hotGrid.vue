@@ -1,10 +1,10 @@
 <template>
 <div class="hot-grid">
 	<ul>
-        <li v-for="(idx,hotDest) in dests" v-if="idx < 6">
-            <a v-link="{ name: 'journeyList', query: { destId: hotDest.destinationId, destType: hotDest.type, destName: hotDest.nameCn, searchBy: 'destination' }}">
-                <c-img :options="{cdn:'ali', src:hotDest.imgUrl, class:'bg', width:hotDestImgW, scale:0.86}"></c-img>
-            </a>
+        <li v-for="(hotDest, idx) in dests" v-if="idx < 6">
+   		 	<router-link :to="{ name: 'journeyList', query: { destId: hotDest.destinationId, destType: hotDest.type, destName: hotDest.nameCn, searchBy: 'destination' } }">
+                <c-img :options="{src:hotDest.imgUrl, class:'bg', width:hotDestImgW, scale:0.86, e:1, c:1}"></c-img>
+            </router-link>
             <div class="name">{{hotDest.nameCn}}</div>
         </li>
     </ul>

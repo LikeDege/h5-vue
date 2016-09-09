@@ -1,7 +1,7 @@
 <template lang="jade">
  div
-    spinner(:show='$loadingRouteData')
-    template(v-if='!$loadingRouteData')
+    spinner(:show='loading')
+    template(v-if='!loading')
       search-box
       swiper(:items='homePage.homeBanners')
       journey-type-bar
@@ -31,7 +31,10 @@
   import { getHomePage } from '../services';
   export default {
     data() {
-      return {homePage: {homeBanners:[],hotDestinations:[],guideListInfos:[]}};
+      return {
+        homePage: {homeBanners:[],hotDestinations:[],guideListInfos:[]},
+        loading: true,
+      };
     },
     components: {
       spinner,
@@ -42,11 +45,20 @@
       guideList,
       help,
     },
-    route: {
-      data(transition) {
-        // 获取首页数据
-        return getHomePage(this).then(response => {this.homePage = response}, err => console.log(err));
-      },
+    created () {
+      this.fetchData();
+    },
+    methods: {
+      fetchData () {
+        this.loading = true;
+        getHomePage(this).then(response => {
+          this.loading = false;
+          this.homePage = response;
+        }, err => {
+          this.loading = false;
+          console.log(err);
+        });
+      }
     },
   };
 

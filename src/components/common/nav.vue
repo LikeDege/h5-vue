@@ -1,10 +1,10 @@
 <template>
-	<nav>
-		<a v-link="{name: 'index'}" class="brand">
+	<nav class="top-nav">
+    <router-link :to="{ name: 'index' }" class="brand">
       <img src="http://pic.8pig.com/img/h5/new/common/logo.png" alt="8pig-logo">
-    </a>
-		<ul class="navbar">
-			<li><a v-link="{name: 'index'}">首页</a></li>
+    </router-link>
+		<ul class="nav-bar">
+			<li><router-link :to="{ name: 'index' }">首页</router-link></li>
       <li><a href="http://test.h5.8pig.com/destList.html">目的地</a></li>
       <li><a href="http://test.h5.8pig.com/consult.html">咨询</a></li>
       <li><a href="http://test.h5.8pig.com/aboutUs.html">关于我们</a></li>
@@ -12,18 +12,8 @@
 	</nav>
 </template>
 
-<script>
-  export default {
-    ready() {
-
-    },
-    methods: {
-    },
-  };
-</script>
-
 <style lang="scss" scoped>
-  nav {
+  .top-nav {
     position: fixed;
     top: 0;
     width: 100%;
@@ -42,7 +32,7 @@
     font-size: 0;
   }
 
-  .navbar {
+  .nav-bar {
     float: right;
     display: inline-block;
 

@@ -5,8 +5,8 @@
                 <a :href="'http://test.h5.8pig.com/journey.html?id='+journey.id">
                     <div class="pic">
                         <span class="new-tag" v-if="journey.new">NEW</span>
-                        <c-img  v-if="journey.photo" :options="{cdn:'ali', src:journey.imgUrl, cX:journey.photo.x, cY:journey.photo.y, cW:journey.photo.w, cH:journey.photo.h, width:imgW}" ></c-img>
-                        <c-img v-else :options="{cdn:'ali', width:145, height:97}" ></c-img>
+                        <c-img v-if="journey.photo" :options="{src:journey.imgUrl, cX:journey.photo.x, cY:journey.photo.y, cW:journey.photo.w, cH:journey.photo.h, width:imgW, e:1, c:1}" ></c-img>
+                        <c-img v-else :options="{width:145, height:97, e:1, c:1}" ></c-img>
                         <span class="price">{{ journey.displayPrice?journey.displayPrice:'￥'+journey.price }}</span>
                         <div class="triangle">
                             <div class="triangle-left"></div>
@@ -24,19 +24,19 @@
     </div>
 </template>
 <script>
-  import cImg from '../common/image';
-  export default {
-    props: ['journeys'],
-    components: {
-    	cImg,
-    },
-    computed: {
-    	imgW() {
-    		let screenW = window.innerWidth>screen.availWidth?screen.availWidth:window.innerWidth;
-    		return (screenW - 30) / 2;
-    	}
-    }
-  }
+import cImg from '../common/image';
+export default {
+	props: ['journeys'],
+	components: {
+		cImg,
+	},
+	computed: {
+		imgW() {
+			let screenW = window.innerWidth>screen.availWidth?screen.availWidth:window.innerWidth;
+			return (screenW - 30) / 2;
+		}
+	}
+}
 </script>
 <style lang="scss" scoped>
 .journey-list {

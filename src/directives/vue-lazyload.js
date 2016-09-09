@@ -48,9 +48,18 @@ exports.install = function (Vue, options) {
         }
         
         let height = top + winH;
-        if (listener.y < height) {
+        if (listener.el.y < height) {
             render(listener)
         }
+    }
+
+    const setElRender = (el, bindType, src, state) => {
+        if (!bindType) {
+            el.setAttribute('src', src)
+        } else {
+            el.setAttribute('style', bindType + ': url(' + src + ')')
+        }
+        el.setAttribute('lazy', state)
     }
 
     const render = function (item) {
@@ -65,31 +74,15 @@ exports.install = function (Vue, options) {
             if (index !== -1) {
                 listeners.splice(index, 1)
             }
-            if (!item.bindType) {
-                item.el.setAttribute('src', item.src)
-            } else {
-                item.el.setAttribute('style', item.bindType + ': url(' + item.src + ')')
-            }
-            item.el.setAttribute('lazy', 'loaded')
+            setElRender(item.el, item.bindType, item.src, 'loaded')
 
         })
         .catch((error) => {
-            if (!item.bindType) {
-                item.el.setAttribute('src', init.error)
-            } else {
-                item.el.setAttribute('style', item.bindType + ': url(' + init.error + ')')
-            }
-            item.el.setAttribute('lazy', 'error')
+            setElRender(item.el, item.bindType, Init.error, 'error')
         })
     }
 
     const loadImageAsync = function (item) {
-        if (!item.bindType) {
-            item.el.setAttribute('src', init.loading)
-        } else {
-            item.el.setAttribute('style', item.bindType + ': url(' + init.loading + ')')
-        }
-
         return new Promise(function(resolve, reject) {
             let image = new Image()
             image.src = item.src
@@ -105,7 +98,8 @@ exports.install = function (Vue, options) {
         })
     }
 
-    const componentWillUnmount = function (el) {
+    const componentWillUnmount = function (el, binding, vnode, OldVnode) {
+        if (!el) return
         let i
         let len = listeners.length
         for (i=0; i<len; i++) {
@@ -120,52 +114,39 @@ exports.install = function (Vue, options) {
             window.removeEventListener('scroll', lazyLoadHandler)
             window.removeEventListener('resize', lazyLoadHandler)
         }
-      }
+    }
+
+    var addListener = (el, binding, vnode) => {
+        if (el.getAttribute('lazy') === 'loaded') return
+        let parentEl = null
+        
+        if (binding.modifiers) {
+            parentEl = window.document.getElementById(Object.keys(binding.modifiers)[0])
+        }
+
+        setElRender(el, binding.arg, init.loading, 'loading')
+
+        Vue.nextTick(() => {
+            let listener = {
+                bindType: binding.arg,
+                try: 0,
+                parentEl: parentEl,
+                el: el,
+                src: binding.value
+            };
+            listeners.push(listener)
+            checkCanShow(listener)
+            if (listeners.length > 0 && !init.hasbind) {
+                init.hasbind = true
+                window.addEventListener('scroll', lazyLoadHandler)
+                window.addEventListener('resize', lazyLoadHandler)
+            }
+        })
+    };
 
     Vue.directive('lazy', {
-        bind: function() {
-            if (!init.hasbind) {
-                init.hasbind = true;
-                Vue.nextTick(() => {
-                    if(document.getElementById(Object.keys(this.modifiers)[0])) {
-                      init.isInChild = true
-                      init.childEl = document.getElementById(Object.keys(this.modifiers)[0])
-                    }
-                    if(init.isInChild) {
-                      init.childEl.addEventListener('scroll', lazyLoadHandler)
-                    }
-                    window.addEventListener('scroll', lazyLoadHandler)
-                    window.addEventListener('resize', lazyLoadHandler)
-                })
-            }
-        },
-        update: function(newValue, oldValue) {
-            this.el.setAttribute('lazy', 'loading')
-            if (!this.arg) {
-                this.el.setAttribute('src', init.loading)
-            } else {
-                this.el.setAttribute('style', this.arg + ': url(' + init.loading + ')')
-            }
-            let parentEl = null
-            this.vm.$nextTick(() => {
-                if(document.getElementById(Object.keys(this.modifiers)[0])) {
-                  parentEl = document.getElementById(Object.keys(this.modifiers)[0])
-                }
-                let listener = {
-                    bindType: this.arg,
-                    try: 0,
-                    parentEl: parentEl,
-                    el: this.el,
-                    src: newValue,
-                    y: this.el.y,
-                }
-                listeners.push(listener)
-                checkCanShow(listener)
-            })
-        },
-        unbind: function () {
-            if (!this.el) return
-            componentWillUnmount(this.el)
-        }
+        bind: addListener,
+        update: addListener,
+        unbind:componentWillUnmount
     })
 }

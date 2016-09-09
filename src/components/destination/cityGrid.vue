@@ -3,16 +3,17 @@
     <header><h3>{{ destName }}</h3></header>
     <ul v-if="cities.length > 0">
         <li><a @click="update(destId)" :class="{active:destId==cityId}">全部</a></li>
-        <li v-for="(idx,city) in cities" :class="{hidden:idx>=6 && !isOpen}">
+        <li v-for="(city,idx) in cities" :class="{hidden: isHidden(idx)}">
             <a @click="update(city.id)" :class="{active:city.id==cityId}">{{ city.nameCn }}</a>
         </li>
-        <li v-if="cities && cities.length>8" class="more">
-        	<a @click="this.isOpen = !this.isOpen">{{isOpen ? '收起' : '更多'}}<i>{{isOpen ? '&#xe61b' : '&#xe61a'}}</i></a>
+        <li v-if="isShowMore()" class="more">
+        	<a @click="toggleMore">{{isOpen ? '收起' : '更多'}}<i>{{isOpen ? '&#xe61b' : '&#xe61a'}}</i></a>
         </li>
     </ul>
 </div>
 </template>
 <script>
+  import { DEST_TYPE_COUNTRY } from '../../common/constants';
   import { getCityList } from '../../services/destination';
   export default {
   	data() {
@@ -23,12 +24,21 @@
   	},
     props: ['destName','destId','destType','cityId'],
     created() {
-		let params = this.destType == 2 ? {countryId: this.destId} : {provinceId: this.destId};
+		let params = this.destType == DEST_TYPE_COUNTRY ? {countryId: this.destId} : {provinceId: this.destId};
 		getCityList(this, params).then(response => {this.cities = response}, err => console.log(err));
     },
     methods: {
     	update(cityId) {
-    		this.cityId = cityId;
+    		this.$emit('update-city', cityId);
+    	},
+    	isHidden(idx) {
+    		return idx>=6 && !this.isOpen;
+    	},
+    	isShowMore() {
+    		return this.cities && this.cities.length>8;
+    	},
+    	toggleMore() {
+    		this.isOpen = !this.isOpen;
     	},
     }
   };

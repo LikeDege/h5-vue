@@ -2,22 +2,22 @@
     <div class="journey-type">
 	    <ul>
 	        <li>
-	            <a @click.stop="journeyType=guide" :class="{selected: journeyType==guide}">
+	            <a @click.stop="updateJourneyType(guide)" :class="{selected: journeyType==guide}">
 	                <i class="icon-guide"></i>
 	                <span>向导服务</span>
 	            </a>
 	        </li><li>
-	            <a @click.stop="journeyType=feature" :class="{selected: journeyType==feature}">
+	            <a @click.stop="updateJourneyType(airport)" :class="{selected: journeyType==airport}">
 	                <i class="icon-feature"></i>
-	                <span>特色项目</span>
-	            </a>
-	        </li><li>
-	            <a @click.stop="journeyType=airport" :class="{selected: journeyType==airport}">
-	                <i class="icon-airport"></i>
 	                <span>机场接送</span>
 	            </a>
 	        </li><li>
-	            <a @click.stop="journeyType=longLine" :class="{selected: journeyType==longLine}">
+	            <a @click.stop="updateJourneyType(feature)" :class="{selected: journeyType==feature}">
+	                <i class="icon-airport"></i>
+	                <span>特色项目</span>
+	            </a>
+	        </li><li>
+	            <a @click.stop="updateJourneyType(longLine)" :class="{selected: journeyType==longLine}">
 	                <i class="icon-long-line"></i>
 	                <span>长线玩法</span>
 	            </a>
@@ -39,6 +39,11 @@
   	},
     props: {
     	journeyType: Number,
+    },
+    methods: {
+    	updateJourneyType(journeyType) {
+    		this.$emit('update-jrnytype', journeyType);
+    	},
     },
   };
 </script>

@@ -1,9 +1,9 @@
 <template>
 	<div class="search-bar">
 	    <ul :class="colClas" >
-            <li v-if="optionalDest">
-                <a v-link="{ name: 'destinationList', query: {journeyType: journeyType} }">{{destName ? destName : '目的地选择'}}<i></i></a>
-            </li><li class="sort">
+	        <li v-if="optionalDest">
+	      		<router-link :to="{name: 'destinationList', query: {journeyType: journeyType}}">{{destName ? destName : '目的地选择'}}<i></i></router-link>
+	        </li><li class="sort">
 	            <a @click="toggleSort(0)" :class="prcClas">价格<i></i></a>
 	        </li><li class="sort">
 	            <a @click="toggleSort(1)" :class="cmtClas">评价数<i></i></a>
@@ -14,48 +14,51 @@
 	</div>
 </template>
 <script>
-	import { JRNY_TYPE_GUIDE, SORT_JRNY_PRC_DESC, SORT_JRNY_PRC_ASC, SORT_JRNY_CMT_DESC, SORT_JRNY_CMT_ASC, TRAFFIC_TYPE_CAR } from '../../common/constants';
-	export default {
-		data() {
-			return {
-				journeyTypeGuide: JRNY_TYPE_GUIDE,
+import { JRNY_TYPE_GUIDE, SORT_JRNY_PRC_DESC, SORT_JRNY_PRC_ASC, SORT_JRNY_CMT_DESC, SORT_JRNY_CMT_ASC, TRAFFIC_TYPE_CAR } from '../../common/constants';
+export default {
+	data() {
+		return {
+			journeyTypeGuide: JRNY_TYPE_GUIDE,
+		}
+	},
+	props: {
+		optionalDest: Boolean,
+		destId: Number,
+		destName: String,
+		sort: Number,
+		trafficType: Number,
+		journeyType: Number,
+	},
+	computed: {
+		colClas() {
+			return [this.optionalDest && this.journeyType==JRNY_TYPE_GUIDE ? 'col-4' : (this.optionalDest || this.journeyType==JRNY_TYPE_GUIDE ? 'col-3' : 'col-2')];
+		},
+		prcClas() {
+			return {up:this.sort==SORT_JRNY_PRC_ASC,down:this.sort==SORT_JRNY_PRC_DESC};
+		},
+		cmtClas() {
+			return {up:this.sort==SORT_JRNY_CMT_ASC,down:this.sort==SORT_JRNY_CMT_DESC};
+		},
+		trafficClas() {
+			return ['car', {active:this.trafficType==TRAFFIC_TYPE_CAR}];
+		},
+	},
+	methods: {
+		toggleSort(flag) {
+			let sort = this.sort;
+			if(flag == 0) {
+				(sort == SORT_JRNY_PRC_ASC) ? (sort = SORT_JRNY_PRC_DESC) : (sort = SORT_JRNY_PRC_ASC);
+			} else {
+				(sort == SORT_JRNY_CMT_ASC) ? (sort = SORT_JRNY_CMT_DESC) : (sort = SORT_JRNY_CMT_ASC);
 			}
+			this.$emit('update-sort', sort);
 		},
-		props: {
-			optionalDest: Boolean,
-			destId: Number,
-			destName: String,
-			sort: Number,
-			trafficType: Number,
-			journeyType: Number,
+		toggleTraffic() {
+			let trafficType = this.trafficType===undefined ? TRAFFIC_TYPE_CAR : undefined;
+			this.$emit('update-traffic-type', trafficType);
 		},
-		computed: {
-			colClas() {
-				return [this.optionalDest && this.journeyType==JRNY_TYPE_GUIDE ? 'col-4' : (this.optionalDest || this.journeyType==JRNY_TYPE_GUIDE ? 'col-3' : 'col-2')];
-			},
-			prcClas() {
-				return {up:this.sort==SORT_JRNY_PRC_ASC,down:this.sort==SORT_JRNY_PRC_DESC};
-			},
-			cmtClas() {
-				return {up:this.sort==SORT_JRNY_CMT_ASC,down:this.sort==SORT_JRNY_CMT_DESC};
-			},
-			trafficClas() {
-				return ['car', {active:this.trafficType==TRAFFIC_TYPE_CAR}];
-			},
-		},
-		methods: {
-			toggleSort(flag) {
-				if(flag == 0) {
-					(this.sort == SORT_JRNY_PRC_ASC) ? (this.sort = SORT_JRNY_PRC_DESC) : (this.sort = SORT_JRNY_PRC_ASC);
-				} else {
-					(this.sort == SORT_JRNY_CMT_ASC) ? (this.sort = SORT_JRNY_CMT_DESC) : (this.sort = SORT_JRNY_CMT_ASC);
-				}
-			},
-			toggleTraffic() {
-				this.trafficType = (this.trafficType===undefined ? TRAFFIC_TYPE_CAR : undefined);
-			},
-		},
-	};
+	},
+};
 </script>
 <style lang="scss" scoped>
 .search-bar{

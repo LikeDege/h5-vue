@@ -2,25 +2,25 @@
     <div class="journey-type">
         <ul>
             <li>
-            	<a v-link="{name: 'journeyList', query: {journeyType: guide, searchBy: 'journeyType'}}">
+            	<router-link :to="{name: 'journeyList', query: {journeyType: guide, searchBy: 'journeyType'}}">
 	            	<i class="icon-guide"></i>
 	                <p>向导服务</p>
-                </a>
+                </router-link>
             </li><li>
-            	<a v-link="{name: 'journeyList', query: {journeyType: airport, searchBy: 'journeyType'}}">
+            	<router-link :to="{name: 'journeyList', query: {journeyType: airport, searchBy: 'journeyType'}}">
 	            	<i class="icon-airport"></i>
 	                <p>机场接送</p>
-                </a>
+                </router-link>
             </li><li>
-            	<a v-link="{name: 'journeyList', query: {journeyType: feature, searchBy: 'journeyType'}}">
+            	<router-link :to="{name: 'journeyList', query: {journeyType: feature, searchBy: 'journeyType'}}">
 	            	<i class="icon-feature"></i>
 	                <p>特色项目</p>
-                </a>
+                </router-link>
             </li><li>
-            	<a v-link="{name: 'journeyList', query: {journeyType: longLine, searchBy: 'journeyType'}}">
+            	<router-link :to="{name: 'journeyList', query: {journeyType: longLine, searchBy: 'journeyType'}}">
 	            	<i class="icon-long-line"></i>
 	                <p>长线玩法</p>
-                </a>
+                </router-link>
             </li>
         </ul>
     </div>

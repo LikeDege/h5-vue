@@ -7,14 +7,19 @@
                :dest-id="$route.query.destId"  
                :dest-type="$route.query.destType" 
                :dest-name="$route.query.destName" 
-               :city-id.sync="conditions.destId"></city-grid>
-    <journey-type-bar v-if="$route.query.searchBy!='journeyType'" :journey-type.sync="conditions.filterCondition.journeyTypes[0]"></journey-type-bar>
+               :city-id="conditions.destId"
+               @update-city="conditions.destId=$event"></city-grid>
+    <journey-type-bar v-if="$route.query.searchBy!='journeyType'" 
+                      :journey-type="conditions.filterCondition.journeyTypes[0]"
+                      @update-jrnytype="conditions.filterCondition.journeyTypes=[$event]"></journey-type-bar>
     <search-bar v-show="$route.query.searchBy == 'journeyType' || conditions.filterCondition.journeyTypes[0]" 
                 :optional-dest="$route.query.destNamesearchBy != 'destination'"
                 :dest-name="$route.query.destName"
-                :journey-type.sync="conditions.filterCondition.journeyTypes[0]" 
-                :sort.sync="conditions.filterCondition.sort" 
-                :traffic-type.sync="conditions.filterCondition.trafficType"></search-bar>
+                :journey-type="conditions.filterCondition.journeyTypes[0]"
+                :sort="conditions.filterCondition.sort"
+                @update-sort="conditions.filterCondition.sort=$event"
+                :traffic-type="conditions.filterCondition.trafficType"
+                @update-traffic-type="conditions.filterCondition.trafficType=$event"></search-bar>
     <journey-list :journeys="journeys"></journey-list>
   </div>
 </template>
@@ -53,10 +58,8 @@
       searchBar,
       journeyList,
     },
-    route: {
-      data(transition) {
-          return this.query();
-      },
+    created () {
+      this.query();
     },
     methods: {
       query() {
