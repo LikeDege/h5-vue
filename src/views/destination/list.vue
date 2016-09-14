@@ -2,20 +2,17 @@
   <div>
     <spinner :show="loading"></spinner>
     <template v-if="!loading">
-      <search-box ref="searchBox"
-                  :autocomplete="true"
+      <search-box :autocomplete="true"
                   @update-keyword="updateKeyword($event)"></search-box>
       <hot-dest-grid v-show="!keyword"
                      :hot-dests="destinationList.searchHotDestinations" 
                      :journey-type="$route.query.journeyType"></hot-dest-grid>
-      <dest-list ref="destList"
-                 :dests="destinationList.destinationBases"
+      <dest-list :dests="destinationList.destinationBases"
                  :journey-type="$route.query.journeyType"
                  :keyword="keyword"
                  :anchor-offset="topNavHeight"
                  @update-anchor="updateNav($event)"></dest-list>
       <list-nav v-show="!keyword"
-                ref="listNav"
                 :nav="nav"
                 :style="listNavStyle"
                 @update-nav="scrollToAnchor($event)"></list-nav>

@@ -25,3 +25,8 @@ export const SORT_JRNY_CMT_ASC = 4; // 玩法评价数升序
 
 /** 是否带车 **/
 export const TRAFFIC_TYPE_CAR = 2; // 带车
+
+/** 缓存key **/
+export const CACHE_COUNTRY = 'country';
+export const CACHE_VALIDATE_MOBILE = 'validateMobile';
+export const CACHE_GUIDE_REGISTER = 'guideRegister';

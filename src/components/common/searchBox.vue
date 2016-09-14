@@ -25,7 +25,7 @@ export default {
 		search() {
 			let keyword = this.keyword.trim();
 			if (keyword){
-				this.$router.go({ name: 'journeyList', query: { keyword: keyword }});
+				this.$router.push({ name: 'journeyList', query: { keyword: keyword }});
 			}
 		},
 	},
