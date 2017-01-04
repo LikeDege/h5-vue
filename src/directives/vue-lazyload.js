@@ -1,4 +1,5 @@
 exports.install = function (Vue, options) {
+    const DEFAULT_ERROR_URL = 'data:img/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEXs7Oxc9QatAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=='
     const DEFAULT_URL = 'data:img/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEXs7Oxc9QatAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg=='
     if (!options) {
         options = {
@@ -8,7 +9,7 @@ exports.install = function (Vue, options) {
         }
     }
     const init = {
-        error: options.error ? options.error : DEFAULT_URL,
+        error: options.error ? options.error : DEFAULT_ERROR_URL,
         loading: options.loading ? options.loading : DEFAULT_URL,
         hasbind: false,
         isInChild: false,
@@ -47,8 +48,12 @@ exports.install = function (Vue, options) {
             top = document.documentElement.scrollTop || document.body.scrollTop
         }
         
-        let height = top + winH;
-        if (listener.el.y < height) {
+        let height = top + winH,
+            listenerY = listener.el.y
+        if(window.devicePixelRatio && window.devicePixelRatio > 1) {
+            listenerY = listenerY / window.devicePixelRatio
+        }
+        if (listenerY < height) {
             render(listener)
         }
     }
@@ -78,7 +83,7 @@ exports.install = function (Vue, options) {
 
         })
         .catch((error) => {
-            setElRender(item.el, item.bindType, Init.error, 'error')
+            setElRender(item.el, item.bindType, init.error, 'error')
         })
     }
 
@@ -117,31 +122,32 @@ exports.install = function (Vue, options) {
     }
 
     var addListener = (el, binding, vnode) => {
-        if (el.getAttribute('lazy') === 'loaded') return
-        let parentEl = null
-        
-        if (binding.modifiers) {
-            parentEl = window.document.getElementById(Object.keys(binding.modifiers)[0])
-        }
-
-        setElRender(el, binding.arg, init.loading, 'loading')
-
-        Vue.nextTick(() => {
-            let listener = {
-                bindType: binding.arg,
-                try: 0,
-                parentEl: parentEl,
-                el: el,
-                src: binding.value
-            };
-            listeners.push(listener)
-            checkCanShow(listener)
-            if (listeners.length > 0 && !init.hasbind) {
-                init.hasbind = true
-                window.addEventListener('scroll', lazyLoadHandler)
-                window.addEventListener('resize', lazyLoadHandler)
+        if (el.getAttribute('lazy') !== 'loaded' || binding.oldValue != binding.value) {
+            let parentEl = null
+            
+            if (binding.modifiers) {
+                parentEl = window.document.getElementById(Object.keys(binding.modifiers)[0])
             }
-        })
+
+            setElRender(el, binding.arg, init.loading, 'loading')
+
+            Vue.nextTick(() => {
+                let listener = {
+                    bindType: binding.arg,
+                    try: 0,
+                    parentEl: parentEl,
+                    el: el,
+                    src: binding.value
+                };
+                listeners.push(listener)
+                checkCanShow(listener)
+                if (listeners.length > 0 && !init.hasbind) {
+                    init.hasbind = true
+                    window.addEventListener('scroll', lazyLoadHandler)
+                    window.addEventListener('resize', lazyLoadHandler)
+                }
+            })
+        }
     };
 
     Vue.directive('lazy', {

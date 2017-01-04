@@ -1,7 +1,6 @@
-import Vue from 'vue/dist/vue';
+import Vue from 'vue';
 import App from './App';
 import VueRouter from 'vue-router';
-import VueResource from 'vue-resource';
 import configRouter from './routers';
 import * as filters from './filters';
 import lazyload from './directives/vue-lazyload';
@@ -12,7 +11,6 @@ Object.keys(filters).forEach(key => {
 })
 
 Vue.use(lazyload)
-Vue.use(VueResource)
 Vue.use(VueRouter)
 
 // scrollBehavior:

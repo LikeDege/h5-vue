@@ -1,19 +1,14 @@
 <template>
-  <div id="app">
-    <c-nav></c-nav>
-    <div class="main">
-      <router-view></router-view>
-    </div>
-  </div>
+    <router-view></router-view>
 </template>
 
 <script>
-import cNav from './components/common/nav';
-
 export default {
-  components: {
-    cNav
-  },
+  computed: {
+    hideNav() {
+      return this.$route.matched.some(m => m.meta.hideNav);
+    }
+  }
 };
 </script>
 
@@ -24,8 +19,21 @@ export default {
   }
 
   body {
+      text-size-adjust: none;
       -webkit-tap-highlight-color:rgba(0,0,0,0);
-      font: 14px 'Microsoft YaHei', 微软雅黑, STHeiti, 'WenQuanYi Micro Hei', SimSun, sans-serif;
+      font-family: Helvetica,sans-serif;
+  }
+
+  [data-dpr = '1'] body {
+      font-size: 14px;
+  }
+
+  [data-dpr = '2'] body {
+      font-size: 28px;
+  }
+
+  [data-dpr = '3'] body {
+      font-size: 42px;
   }
 
   input,textarea {
@@ -39,7 +47,6 @@ export default {
 
   html, body {
     height: 100%;
-    background: #f2f2f2;
   }
 
   ul {
@@ -60,7 +67,7 @@ export default {
   }
 
   a {
-    color: #CCC;
+    color: #666;
     text-decoration: none;
   }
 
@@ -71,20 +78,7 @@ export default {
   .main {
     overflow: hidden;
     min-height: 100%;
-    padding-top:50px;
   }
 
-  @font-face {
-    font-family: "iconfont";
-    src: url('./assets/font/iconfont.woff') format('woff'), /* chrome、firefox */
-       url('./assets/font/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-       url('./assets/font/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
-  }
 
-  .icon {
-    font-family: "iconfont";
-    font-style: inherit;
-    font-size: 32px;
-    line-height: 36px;
-  }
 </style>

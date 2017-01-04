@@ -1,0 +1,31 @@
+@mixin small-fs() {
+  @for $i from 1 through 3 {
+    [data-dpr = '#{$i}'] & {
+      font-size: 12*$i+px;
+    }
+  }
+}
+
+@mixin big-fs() {
+  @for $i from 1 through 3 {
+    [data-dpr = '#{$i}'] & {
+      font-size: 14*$i+px;
+    }
+  }
+}
+
+@mixin large-fs() {
+  @for $i from 1 through 3 {
+    [data-dpr = '#{$i}'] & {
+      font-size: 16*$i+px;
+    }
+  }
+}
+
+@mixin huge-fs() {
+  @for $i from 1 through 3 {
+    [data-dpr = '#{$i}'] & {
+      font-size: 18*$i+px;
+    }
+  }
+}

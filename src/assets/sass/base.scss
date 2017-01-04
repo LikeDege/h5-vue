@@ -1,0 +1,13 @@
+
+@function px2rem($px) {
+  @return $px/75 +rem;
+}
+
+$margin-s: px2rem(18);
+$margin: px2rem(24);
+
+$primary:#ff585c;
+$danger:#000; //warn
+$disabled:#ccc;  //warn
+
+$border-color:#ccc; //warn

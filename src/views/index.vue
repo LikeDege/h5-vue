@@ -1,23 +1,25 @@
-<template lang="jade">
- div
-    spinner(:show='loading')
-    template(v-if='!loading')
-      search-box
-      swiper(:items='homePage.homeBanners')
-      journey-type-bar
-      div
-          .title
-              h3 热门目的地
-              a.more(href="http://test.h5.8pig.com/destList.html") 更多
-          hot-dest-grid(:dests='homePage.hotDestinations')
-      div
-          .title 
-              h3 推荐达人
-          guide-list(:guides='homePage.guideListInfos')
-      div
-          .title
-              h3 帮助信息
-          help
+<template>
+ <div>
+    <spinner :show='loading'></spinner>
+    <template v-if='!loading'>
+      <search-box></search-box>
+      <swiper :items='homePage.homeBanners'></swiper>
+      <journey-type-bar></journey-type-bar>
+      <div>
+          <h3 class="title">热门目的地</h3>
+              <a class="more" href="http://test.h5.8pig.com/destList.html">更多</a>
+          <hot-dest-grid :dests='homePage.hotDestinations'></hot-dest-grid>
+      </div>
+      <div>
+          <h3 class="title ">推荐达人</h3>
+          <guide-list :guides='homePage.guideListInfos'></guide-list>
+      </div>
+      <div>
+          <h3 class="title">帮助信息</h3>
+          <help></help>
+      </div>
+    </template>
+  </div>
 </template>
 
 <script>

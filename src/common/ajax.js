@@ -1,42 +1,37 @@
-import { API as api  } from './conf';
+import "es6-promise/auto";
+import axios from "axios";
+import {API} from "./conf";
+import Toast from "../components/common/toast";
 
-/**
- * get请求
- * @param  {Object} context       上下文
- * @param  {String} options.url   api地址
- * @param  {String} options.query query参数
- * @return {Promise}               Promise
- */
-export const get = (context, url, query) => {
-  let _url;
-  if (query) {
-    _url = `${api}${url}?${query}`;
-  } else {
-    _url = `${api}${url}`;
-  }
-
-  return context.$http.get(_url, {credentials: true, emulateJSON: false})
-    .then((res) => {
-      if (res.status >= 200 && res.status < 300) {
-        return res.json();
-      }
-      return Promise.reject(new Error(res.status));
-    });
-};
-
-/**
- * post请求
- * @param  {Object} context 上下文
- * @param  {String} url     api地址
- * @param  {Object} params  包含post内容的object
- * @return {Promise}        Promise
- */
-export const post = (context, url, params) => {
-  return context.$http.post(`${api}${url}`, params, {credentials: true, emulateJSON: false})
-  .then((res) => {
-    if (res.status >= 200 && res.status < 300) {
-      return res.json();
-    }
-    return Promise.reject(new Error(res.status));
+const error = (msg)=>{
+  // 错误提示
+  Toast({
+    message: msg,
+    position: 'center',
+    duration: 5000
   });
-};
+}
+
+export async function get(path) {
+    let result = await axios.get(path);
+    return result.data;
+}
+
+export default async function post(url,params,otherPath) {
+    try {
+      let result = await axios.request({
+          url: url,
+          method: 'post',
+          data: params,
+          withCredentials: true,
+          baseURL: API,
+      });
+      if(result.data.returnCode != 0) {
+        error(result.data.returnMsg);
+      }
+      return result.data;
+    } catch (e){
+      error('糟糕,服务器出错了~~');
+      return '';
+    }
+}

@@ -18,6 +18,7 @@ module.exports = {
         alias: {
             'src': path.resolve(__dirname, '../src'),
             'assets': path.resolve(__dirname, '../src/assets'),
+            'sass': path.resolve(__dirname, '../src/assets/sass'),
             'components': path.resolve(__dirname, '../src/components')
         }
     },
@@ -45,15 +46,15 @@ module.exports = {
                 loader: 'vue-html'
             },
             {
-                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                test: /\.(png|jpe?g|gif)(\?.*)?$/,
                 loader: 'url',
                 query: {
                     limit: 10000,
-                    name: utils.assetsPath('img/[name].[hash:7].[ext]')
+                    name: utils.assetsPath('images/[name].[hash:7].[ext]')
                 }
             },
             {
-                test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+                test: /\.(woff2?|eot|ttf|otf|svg)(\?.*)?$/,
                 loader: 'url',
                 query: {
                     limit: 10000,
